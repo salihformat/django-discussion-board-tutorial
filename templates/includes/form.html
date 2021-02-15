@@ -1,0 +1,46 @@
+{%load widget_tweaks%}
+
+<!--اظهار الخطا في حالة الحقول فارغة في شاشة الدخول-->
+{% if form.non_field_errors%}
+<div class="alert alert-danger" role="alert">
+{%for error in form.non_field_errors%}
+<p {%if forloop.last%}  class="mb-0" {%endif%}> {{error}} </p>
+    {%endfor%}
+    </div>
+{%endif%}
+<!--    as_p , as_ul , as_table انواع الفورم -->
+<!-- {{form.as_p}}-->
+    {% for field in form %}
+    <div class="form-group">
+<!--        لاظهار اسماء الحقول -->
+        {{field.label_tag}}
+<!--        لعمل validiction والتنسيق علي حسب الللون -->
+<!--        للتاكد هل يوجد بيانات ام لا -->
+        {% if form.is_bound %}
+            {%if field.errors%}
+<!--        يظهر اطار الحقل باللون الاحمر-->
+               {% render_field field class="form-control is-invalid" %}
+                {% for error in field.errors %}
+<!--        يظهر رسالة الخطا -->
+                    <div class="invalid-feedback">
+                {{error}}
+                 </div>
+                {%endfor%}
+            {%else%}
+        <!--        يظهر اطار الحقل باللون الاخضر-->
+            {% render_field field class="form-control is-valid" %}
+            {% endif%}
+        {%else%}
+<!--        اظهار الحقل مع التنسيق-->
+        {% render_field field class="form-control" %}
+        {%endif%}
+
+    </div>
+<!--    لاظهار تعليمات-->
+    {% if field.help_text %}
+    <small calss="form-text text-muted">
+        {{field.help_text}}
+    </small>
+    {%endif%}
+
+    {%endfor%}

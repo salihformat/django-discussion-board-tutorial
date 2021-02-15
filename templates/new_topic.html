@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} Create New Topic {%endblock%}
+
+{% block breadcrumb %}
+        <li class="breadcrumb-item "><a href="{% url 'home' %}"> Boards</a></li>
+        <li class="breadcrumb-item "><a href="{% url 'board_topics' board.pk %}" >{{board.name}}</a></li>
+        <li class="breadcrumb-item active">New Topic</li>
+  {%endblock%}
+
+ {%block content%}
+<!--novalidate لكي لا يظهر رسالة رسالة الخطا عند الالدخال-->
+<form method="post", novalidate>
+<!--    للحماية لازم تعملها -->
+{% csrf_token %}
+
+{%include 'includes/form.html'%}
+    <br>
+    <button type="submit" class="btn btn-success">Submit</button>
+
+</form>
+
+    {%endblock%}
